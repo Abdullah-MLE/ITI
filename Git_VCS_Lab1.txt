@@ -1,0 +1,102 @@
+$ git config --global user.name "Abdullah Saeed"
+- change the global user name to Abdullah Saeed
+- so my name will be the author of my commits
+----------------------------------------------------------------
+$ git config --global user.email "abdullahsaid814@gmail.com"
+- change the global email to abdullahsaid814@gmail.com
+----------------------------------------------------------------
+$ git config --global init.defaultBranch main
+- make the default branch name "main" not "master"
+----------------------------------------------------------------
+$ git config --global core.editor "code --wait"
+- IDK XD
+----------------------------------------------------------------
+$ git config --list
+- check my new added configs
+----------------------------------------------------------------
+$ touch my_first_file.txt
+- create a text file for the lab
+----------------------------------------------------------------
+$ git status
+- check my git status to see where is the file i just created
+- my file is untracked because i did't add it to the stage
+----------------------------------------------------------------
+$ git add my_first_file.txt
+- adding the file to the staggering area
+----------------------------------------------------------------
+$ git status
+- check the status agin
+- the file now is ready for commiting
+----------------------------------------------------------------
+- adding the text "this is the first commit ever" for the file
+----------------------------------------------------------------
+$ git status
+- now i have changes to be committed the file in the stage
+- and the changes not staged for commit "modified: my_file"
+----------------------------------------------------------------
+$ git commit -m "this is the first commit ever"
+- committing the file to the repo
+----------------------------------------------------------------
+- now I'll Connect to GitHub with SSH keys
+- 1.create a key pair public key and private key
+-     the -t is for type
+-     the -C to add a comment for this ssh-key
+$ ssh-keygen -t ed25519 -C "a key for my GitHub abdullahsaid814@gmail.com"
+
+- Enter, Enter, Enter
+- now it's created in the home/use/.shh
+
+- 2.copy the PUBLIC key into GitHub
+$ cat ~/.ssh/id_ed25519.pub
+
+- 3.connect to the GitHub
+-     from profile > settings > SH and GPG Keys > New SSH Key
+-     title: ssh key for lenovo flex 5 fedora
+-     Key type: Authentication Key
+-     Key: past the key value
+-     add SSH Key
+
+- 4. test the connection
+$ ssh -T git@github.com
+----------------------------------------------------------------
+- Create Remote repo DONE
+- now I'll connect the remote with the local
+$ git remote add origin git@github.com:Abdullah-MLE/ITI_VCS_Course.git
+
+- I'll not run this command becuz it renames the main branch to "main"
+and it's "main" in the first place
+$ git branch -M main
+
+- or this commend because i don't want to push now
+$ git push -u origin main
+----------------------------------------------------------------
+- create a file -Your CV- as .txt
+$ touch Abdullah_saeed_CV.txt
+
+- add it and commit it
+$ git add .
+$ git commit -m "my CV"
+
+- change your name to start with Eng. **** then amend the commit
+$ mv Abdullah_saeed_CV.txt Eng.Abdullah_saeed_CV.txt
+$ git commit -a -m "rename the file"
+$ git commit -a -m "add line in the CV"
+----------------------------------------------------------------
+- push it to your github
+$ git push -u origin/main
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
