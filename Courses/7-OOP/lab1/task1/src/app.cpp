@@ -1,50 +1,56 @@
-// #include <sys/ioctl.h>
-// sys/ioctl.h is a C header file
-// in POSIX-compliant OSs
-// -- POSIX: Portable Operating System Interface
-
-// ioctl, TIOCGWINSZ, winsize
-// #include <unistd.h>
-// the unistd or Unix Standard is
-// provides wrapper functions for
-// core system calls
-// ------------------------------
-// we importing it to use: STDOUT_FILENO
-
 #include "../include/app.h"
+void reset_color() { cout << ESC << "[0m"; }
 
-#include <iostream>
-using namespace std;
+void move_cursor(int x, int y) { cout << ESC << "[" << x << ";" << y << "H"; }
 
-void chage_text_color(char* text, int color) {
-  cout << "\x1b";
-  cout << "[1;" << color << "m";
-  cout << text;
-  cout << "\x1b";
-  cout << "[0m";
-  cout << "\n";
+void cout_bg_cell(int row, int col, int color) {
+  move_cursor(row, col);
+  cout << ESC << "[48;5;" << color << "m ";
+  reset_color();
 }
 
-void move_cursor(int x, int y) {
-  // ESC[{line};{column}H
-  // ESC[{line};{column}f
-  cout << "\x1b";
-  cout << "[50;50H";
-//   cout << "\x1b";
-//   cout << "[5;5f";
-//   cout << "\x1b";
+int get_width_center(char* text) {
+  int len = 0;
+  while (text[len] != '\0') {
+    len++;
+  }
 
+  return (BG_WIDTH - 2 - len) / 2;
+}
+
+void draw_frame() {
+  // printing up and down fram
+  for (int col = 1; col <= BG_WIDTH; col++) {
+    cout_bg_cell(1, col, FRAM_COLOR);
+    cout_bg_cell(BG_HEIGHT, col, FRAM_COLOR);
+  }
+
+  // printing left and right fram
+  for (int row = 2; row < BG_HEIGHT; row++) {
+    cout_bg_cell(row, 1, FRAM_COLOR);
+    cout_bg_cell(row, 2, FRAM_COLOR);
+    cout_bg_cell(row, BG_WIDTH - 1, FRAM_COLOR);
+    cout_bg_cell(row, BG_WIDTH, FRAM_COLOR);
+  }
+}
+
+void cout_text(int row, char* text, int color) {
+  int col = get_width_center(text);
+
+  move_cursor(row, col);
+  cout << ESC << "[1;" << color << "m" << text;
+  reset_color();
 }
 
 void show_tui_menu(char* text1, int color1, char* text2, int color2,
                    char* text3, int color3) {
-  cout << "text1: " << text1 << " color: " << color1 << endl;
-  cout << "text2: " << text2 << " color: " << color2 << endl;
-  cout << "text3: " << text3 << " color: " << color3 << endl;
-  cout << "========================================" << endl;
-  move_cursor(5, 5);
-  chage_text_color(text1, color1);
-  chage_text_color(text2, color2);
-  chage_text_color(text3, color3);
-  // print_centered(text1);
+  draw_frame();
+
+  int start_row = BG_HEIGHT / 2;
+
+  cout_text(start_row, text1, color1);
+  cout_text(start_row + 1, text2, color2);
+  cout_text(start_row + 2, text3, color3);
+
+  move_cursor(BG_HEIGHT + 1, 1);
 }

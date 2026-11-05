@@ -1,7 +1,4 @@
-#include <iostream>
-
 #include "../include/app.h"
-
 int main() {
   char text1[] = "text1";
   char text2[] = "text2";
