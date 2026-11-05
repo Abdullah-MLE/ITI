@@ -1,14 +1,11 @@
-#include "../include/app.h"
-#include "../include/str.h"
 #include <iostream>
-#define ToUpper 0
-#define ToLower 1
-#define StringCompaare 2
-#define StringCopy 3
+
+#include "../include/app.h"
 
 int main() {
-  char str1[] = "Hi";
-  char str2[] = "hi2";
-  str(ToLower, str1, str2);
+  char text1[] = "text1";
+  char text2[] = "text2";
+  char text3[] = "text3";
+  show_tui_menu(text1, Red, text2, Green, text3, Blue);
   return 0;
 }

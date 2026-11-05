@@ -1,10 +1,6 @@
 #include <iostream>
-
 #include "../include/str.h"
-#define ToUpper 0
-#define ToLower 1
-#define StringCompaare 2
-#define StringCopy 3
+
 
 int main() {
   char str1[] = "i2555";
