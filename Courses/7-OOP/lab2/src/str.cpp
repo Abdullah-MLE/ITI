@@ -7,6 +7,9 @@ using namespace std;
 #define NotEqule 4
 #define SizeDiff 5
 
+#include "../include/str.h"
+
+
 void toupper(char* str) {
   int i = 0;
   while (str[i] != '\0') {

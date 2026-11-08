@@ -1,7 +1,4 @@
-#include <iostream>
 #include "../include/str.h"
-
-
 int main() {
   char str1[] = "i2555";
   char str2[] = "hi2565";

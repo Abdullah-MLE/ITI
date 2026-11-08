@@ -1,3 +1,5 @@
+#include <iostream>
+using namespace std;
 #define ToUpper 0
 #define ToLower 1
 #define StringCompaare 2
