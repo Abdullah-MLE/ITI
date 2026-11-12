@@ -1,56 +1,43 @@
 #include "../include/app.h"
+void reset_color() { cout << ESC << "[0m"; }
 
-#include <sys/ioctl.h>
-// sys/ioctl.h is a C header file
-// in POSIX-compliant OSs
-// -- POSIX: Portable Operating System Interface
+void move_cursor(int x, int y) { cout << ESC << "[" << x << ";" << y << "H"; }
 
-// ioctl, TIOCGWINSZ, winsize
-#include <unistd.h>
-// the unistd or Unix Standard is
-// provides wrapper functions for
-// core system calls
-// ------------------------------
-// we importing it to use: STDOUT_FILENO
-
-#include <iostream>
-
-winsize read_terminal_size() {
-    winsize size;
-    ioctl(STDOUT_FILENO, TIOCGWINSZ, &size);
-    return size;
+void print_bg_cell(int row, int col, int color) {
+  move_cursor(row, col);
+  cout << ESC << "[48;5;" << color << "m ";
+  reset_color();
 }
 
-int get_width() {
-    return read_terminal_size().ws_col;
+int get_width_center(char* text) {
+  int count = 0;
+  while (text[count] != '\0') {
+    count++;
+  }
+
+  return (BG_WIDTH - count) / 2;
 }
 
-int get_height() {
-    return read_terminal_size().ws_row;
+void draw_frame() {
+  // printing up and down fram
+  for (int i = 0; i < BG_WIDTH; i++) {
+    print_bg_cell(0, i, FRAM_COLOR);
+    print_bg_cell(BG_HEIGHT, i, FRAM_COLOR);
+  }
+
+  // printing left and right fram
+  for (int i = 0; i < BG_HEIGHT; i++) {
+    print_bg_cell(i, 1, FRAM_COLOR);
+    print_bg_cell(i, 2, FRAM_COLOR);
+    print_bg_cell(i, BG_WIDTH - 1, FRAM_COLOR);
+    print_bg_cell(i, BG_WIDTH - 2, FRAM_COLOR);
+  }
 }
 
-int calculate_left_padding(int width, int text_length) {
-    if (text_length >= width) {
-        return 0;
-    }
-    return (width - text_length) / 2;
-}
+void print_text(int row, char* text, int color) {
+  int col = get_width_center(text);
 
-std::string make_spaces(int count) {
-    return std::string(count, ' ');
-}
-
-void print_centered(std::string text) {
-    int padding = calculate_left_padding(get_width(), text.length());
-    std::cout << make_spaces(padding) << text << '\n';
-}
-
-void show_tui_menu(
-     std::string text1,  std::string color1,
-     std::string text2,  std::string color2,
-     std::string text3,  std::string color3,
-     std::string text4,  std::string color4,
-     std::string text5,  std::string color5)
-{
-    print_centered(text1);
+  move_cursor(row, col);
+  cout << ESC << "[1;" << color << "m" << text;
+  reset_color();
 }

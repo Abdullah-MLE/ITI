@@ -9,7 +9,6 @@ using namespace std;
 
 #include "../include/str.h"
 
-
 void toupper(char* str) {
   int i = 0;
   while (str[i] != '\0') {
