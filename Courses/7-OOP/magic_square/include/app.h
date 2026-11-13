@@ -1,0 +1,1 @@
+void magicSquare(int size, int delay);

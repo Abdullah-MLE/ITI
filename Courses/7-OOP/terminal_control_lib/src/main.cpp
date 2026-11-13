@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "../include/app.h"
+#include "../include/lib.h"
 int main() {
   int startRow = 5;
 

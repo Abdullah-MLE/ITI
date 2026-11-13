@@ -1,9 +1,6 @@
 #include <iostream>
 using namespace std;
-#define ESC "\x1b"
-#define BG_WIDTH 70
-#define BG_HEIGHT 15
-#define FRAM_COLOR 9
+#define ESC '\x1b'
 
 #define BrightBlack 90
 #define BrightRed 91
@@ -42,6 +39,10 @@ void showCursor();
 
 // Text formatting
 void changeFormattingStyle(const char* style);
+
+// short cuts
+void printBGCell(int x, int y, int color);
+
 
 // ----------------------------
 // Terminal information

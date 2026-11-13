@@ -1,4 +1,4 @@
-#include "../include/app.h"
+#include "../include/lib.h"
 // Cursor position
 void moveCursor(int x, int y) { cout << ESC << "[" << x << ";" << y << "H"; };
 
@@ -26,3 +26,18 @@ void showCursor() { cout << ESC << "[?25h"; };
 
 // Text formatting
 void changeFormattingStyle(const char* style) { cout << ESC << style; };
+
+// short cuts
+void printBGCell(int x, int y, int color) {
+  moveCursor(x, y);
+  setBGColor(color);
+  cout << " ";
+};
+
+// ---------------------------
+// Terminal information
+void getTerminalSize();
+
+// Keyboard input
+void enableRawMode();
+void disableRawMode();
