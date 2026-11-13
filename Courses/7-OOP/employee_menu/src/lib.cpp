@@ -12,7 +12,6 @@ void clearScreen() {
   cout << ESC << "[2J";
   moveCursor(1, 1);
 };
-void clearLine() { cout << ESC << "[2K"; };
 void clearToEndOfLine() { cout << ESC << "[0K"; };
 void clearArea(int row1, int col1, int row2, int col2) {
   for (int row = row1; row <= row2; row++) {

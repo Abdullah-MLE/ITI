@@ -5,28 +5,308 @@
       "scopeName": "Locals",
       "variables": [
         {
-          "name": "cur",
-          "evaluateName": "cur",
+          "name": "i",
+          "evaluateName": "i",
           "value": "1",
           "type": "int"
         },
         {
-          "name": "byte1",
-          "evaluateName": "byte1",
-          "value": "27 '\\033'",
-          "type": "char"
+          "name": "cur",
+          "evaluateName": "cur",
+          "value": "0x7fffffffd6d4",
+          "type": "int *",
+          "memoryReference": "0x00007fffffffd6d4",
+          "children": [
+            {
+              "name": "*(cur)",
+              "evaluateName": "*(cur)",
+              "value": "2",
+              "type": "int"
+            }
+          ]
         },
         {
-          "name": "byte2",
-          "evaluateName": "byte2",
-          "value": "91 '['",
-          "type": "char"
+          "name": "prtToEmps",
+          "evaluateName": "prtToEmps",
+          "value": "0x417020",
+          "type": "employee *",
+          "memoryReference": "0x0000000000417020",
+          "children": [
+            {
+              "name": "((employee *)0x417020)->firstName",
+              "evaluateName": "((employee *)0x417020)->firstName",
+              "value": "",
+              "type": "char [20]",
+              "children": [
+                {
+                  "name": "(((employee *)0x417020)->firstName)[0]",
+                  "evaluateName": "(((employee *)0x417020)->firstName)[0]",
+                  "value": "49 '1'",
+                  "type": "char"
+                },
+                {
+                  "name": "(((employee *)0x417020)->firstName)[1]",
+                  "evaluateName": "(((employee *)0x417020)->firstName)[1]",
+                  "value": "0 '\\000'",
+                  "type": "char"
+                },
+                {
+                  "name": "(((employee *)0x417020)->firstName)[2]",
+                  "evaluateName": "(((employee *)0x417020)->firstName)[2]",
+                  "value": "0 '\\000'",
+                  "type": "char"
+                },
+                {
+                  "name": "(((employee *)0x417020)->firstName)[3]",
+                  "evaluateName": "(((employee *)0x417020)->firstName)[3]",
+                  "value": "0 '\\000'",
+                  "type": "char"
+                },
+                {
+                  "name": "(((employee *)0x417020)->firstName)[4]",
+                  "evaluateName": "(((employee *)0x417020)->firstName)[4]",
+                  "value": "0 '\\000'",
+                  "type": "char"
+                },
+                {
+                  "name": "(((employee *)0x417020)->firstName)[5]",
+                  "evaluateName": "(((employee *)0x417020)->firstName)[5]",
+                  "value": "0 '\\000'",
+                  "type": "char"
+                },
+                {
+                  "name": "(((employee *)0x417020)->firstName)[6]",
+                  "evaluateName": "(((employee *)0x417020)->firstName)[6]",
+                  "value": "0 '\\000'",
+                  "type": "char"
+                },
+                {
+                  "name": "(((employee *)0x417020)->firstName)[7]",
+                  "evaluateName": "(((employee *)0x417020)->firstName)[7]",
+                  "value": "0 '\\000'",
+                  "type": "char"
+                },
+                {
+                  "name": "(((employee *)0x417020)->firstName)[8]",
+                  "evaluateName": "(((employee *)0x417020)->firstName)[8]",
+                  "value": "0 '\\000'",
+                  "type": "char"
+                },
+                {
+                  "name": "(((employee *)0x417020)->firstName)[9]",
+                  "evaluateName": "(((employee *)0x417020)->firstName)[9]",
+                  "value": "0 '\\000'",
+                  "type": "char"
+                },
+                {
+                  "name": "(((employee *)0x417020)->firstName)[10]",
+                  "evaluateName": "(((employee *)0x417020)->firstName)[10]",
+                  "value": "0 '\\000'",
+                  "type": "char"
+                },
+                {
+                  "name": "(((employee *)0x417020)->firstName)[11]",
+                  "evaluateName": "(((employee *)0x417020)->firstName)[11]",
+                  "value": "0 '\\000'",
+                  "type": "char"
+                },
+                {
+                  "name": "(((employee *)0x417020)->firstName)[12]",
+                  "evaluateName": "(((employee *)0x417020)->firstName)[12]",
+                  "value": "0 '\\000'",
+                  "type": "char"
+                },
+                {
+                  "name": "(((employee *)0x417020)->firstName)[13]",
+                  "evaluateName": "(((employee *)0x417020)->firstName)[13]",
+                  "value": "0 '\\000'",
+                  "type": "char"
+                },
+                {
+                  "name": "(((employee *)0x417020)->firstName)[14]",
+                  "evaluateName": "(((employee *)0x417020)->firstName)[14]",
+                  "value": "0 '\\000'",
+                  "type": "char"
+                },
+                {
+                  "name": "(((employee *)0x417020)->firstName)[15]",
+                  "evaluateName": "(((employee *)0x417020)->firstName)[15]",
+                  "value": "0 '\\000'",
+                  "type": "char"
+                },
+                {
+                  "name": "(((employee *)0x417020)->firstName)[16]",
+                  "evaluateName": "(((employee *)0x417020)->firstName)[16]",
+                  "value": "0 '\\000'",
+                  "type": "char"
+                },
+                {
+                  "name": "(((employee *)0x417020)->firstName)[17]",
+                  "evaluateName": "(((employee *)0x417020)->firstName)[17]",
+                  "value": "0 '\\000'",
+                  "type": "char"
+                },
+                {
+                  "name": "(((employee *)0x417020)->firstName)[18]",
+                  "evaluateName": "(((employee *)0x417020)->firstName)[18]",
+                  "value": "0 '\\000'",
+                  "type": "char"
+                },
+                {
+                  "name": "(((employee *)0x417020)->firstName)[19]",
+                  "evaluateName": "(((employee *)0x417020)->firstName)[19]",
+                  "value": "0 '\\000'",
+                  "type": "char"
+                }
+              ]
+            },
+            {
+              "name": "((employee *)0x417020)->lastName",
+              "evaluateName": "((employee *)0x417020)->lastName",
+              "value": "",
+              "type": "char [20]",
+              "children": [
+                {
+                  "name": "(((employee *)0x417020)->lastName)[0]",
+                  "evaluateName": "(((employee *)0x417020)->lastName)[0]",
+                  "value": "49 '1'",
+                  "type": "char"
+                },
+                {
+                  "name": "(((employee *)0x417020)->lastName)[1]",
+                  "evaluateName": "(((employee *)0x417020)->lastName)[1]",
+                  "value": "0 '\\000'",
+                  "type": "char"
+                },
+                {
+                  "name": "(((employee *)0x417020)->lastName)[2]",
+                  "evaluateName": "(((employee *)0x417020)->lastName)[2]",
+                  "value": "0 '\\000'",
+                  "type": "char"
+                },
+                {
+                  "name": "(((employee *)0x417020)->lastName)[3]",
+                  "evaluateName": "(((employee *)0x417020)->lastName)[3]",
+                  "value": "0 '\\000'",
+                  "type": "char"
+                },
+                {
+                  "name": "(((employee *)0x417020)->lastName)[4]",
+                  "evaluateName": "(((employee *)0x417020)->lastName)[4]",
+                  "value": "0 '\\000'",
+                  "type": "char"
+                },
+                {
+                  "name": "(((employee *)0x417020)->lastName)[5]",
+                  "evaluateName": "(((employee *)0x417020)->lastName)[5]",
+                  "value": "0 '\\000'",
+                  "type": "char"
+                },
+                {
+                  "name": "(((employee *)0x417020)->lastName)[6]",
+                  "evaluateName": "(((employee *)0x417020)->lastName)[6]",
+                  "value": "0 '\\000'",
+                  "type": "char"
+                },
+                {
+                  "name": "(((employee *)0x417020)->lastName)[7]",
+                  "evaluateName": "(((employee *)0x417020)->lastName)[7]",
+                  "value": "0 '\\000'",
+                  "type": "char"
+                },
+                {
+                  "name": "(((employee *)0x417020)->lastName)[8]",
+                  "evaluateName": "(((employee *)0x417020)->lastName)[8]",
+                  "value": "0 '\\000'",
+                  "type": "char"
+                },
+                {
+                  "name": "(((employee *)0x417020)->lastName)[9]",
+                  "evaluateName": "(((employee *)0x417020)->lastName)[9]",
+                  "value": "0 '\\000'",
+                  "type": "char"
+                },
+                {
+                  "name": "(((employee *)0x417020)->lastName)[10]",
+                  "evaluateName": "(((employee *)0x417020)->lastName)[10]",
+                  "value": "0 '\\000'",
+                  "type": "char"
+                },
+                {
+                  "name": "(((employee *)0x417020)->lastName)[11]",
+                  "evaluateName": "(((employee *)0x417020)->lastName)[11]",
+                  "value": "0 '\\000'",
+                  "type": "char"
+                },
+                {
+                  "name": "(((employee *)0x417020)->lastName)[12]",
+                  "evaluateName": "(((employee *)0x417020)->lastName)[12]",
+                  "value": "0 '\\000'",
+                  "type": "char"
+                },
+                {
+                  "name": "(((employee *)0x417020)->lastName)[13]",
+                  "evaluateName": "(((employee *)0x417020)->lastName)[13]",
+                  "value": "0 '\\000'",
+                  "type": "char"
+                },
+                {
+                  "name": "(((employee *)0x417020)->lastName)[14]",
+                  "evaluateName": "(((employee *)0x417020)->lastName)[14]",
+                  "value": "0 '\\000'",
+                  "type": "char"
+                },
+                {
+                  "name": "(((employee *)0x417020)->lastName)[15]",
+                  "evaluateName": "(((employee *)0x417020)->lastName)[15]",
+                  "value": "0 '\\000'",
+                  "type": "char"
+                },
+                {
+                  "name": "(((employee *)0x417020)->lastName)[16]",
+                  "evaluateName": "(((employee *)0x417020)->lastName)[16]",
+                  "value": "0 '\\000'",
+                  "type": "char"
+                },
+                {
+                  "name": "(((employee *)0x417020)->lastName)[17]",
+                  "evaluateName": "(((employee *)0x417020)->lastName)[17]",
+                  "value": "0 '\\000'",
+                  "type": "char"
+                },
+                {
+                  "name": "(((employee *)0x417020)->lastName)[18]",
+                  "evaluateName": "(((employee *)0x417020)->lastName)[18]",
+                  "value": "0 '\\000'",
+                  "type": "char"
+                },
+                {
+                  "name": "(((employee *)0x417020)->lastName)[19]",
+                  "evaluateName": "(((employee *)0x417020)->lastName)[19]",
+                  "value": "0 '\\000'",
+                  "type": "char"
+                }
+              ]
+            },
+            {
+              "name": "((employee *)0x417020)->age",
+              "evaluateName": "((employee *)0x417020)->age",
+              "value": "1",
+              "type": "int"
+            },
+            {
+              "name": "((employee *)0x417020)->salry",
+              "evaluateName": "((employee *)0x417020)->salry",
+              "value": "1",
+              "type": "int"
+            }
+          ]
         },
         {
-          "name": "byte3",
-          "evaluateName": "byte3",
-          "value": "66 'B'",
-          "type": "char"
+          "name": "sizeOdStaticArray",
+          "evaluateName": "sizeOdStaticArray",
+          "value": "2",
+          "type": "int"
         }
       ]
     },
