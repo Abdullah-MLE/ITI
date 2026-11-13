@@ -1,6 +1,6 @@
 #include "../include/lib.h"
 // Cursor position
-void moveCursor(int x, int y) { cout << ESC << "[" << x << ";" << y << "H"; };
+void moveCursor(int row, int col) { cout << ESC << "[" << row << ";" << col << "H"; };
 
 // Styles and Colors
 void setColor(int color) { cout << ESC << "[" << color << "m"; };
@@ -8,13 +8,16 @@ void setBGColor(int color) { cout << ESC << "[" << color + 10 << "m"; }
 void resetStyle() { cout << ESC << "[0m"; };
 
 // Screen control
-void clearScreen() { cout << ESC << "[2J"; };
+void clearScreen() {
+  cout << ESC << "[2J";
+  moveCursor(1, 1);
+};
 void clearLine() { cout << ESC << "[2K"; };
 void clearToEndOfLine() { cout << ESC << "[0K"; };
-void clearArea(int x1, int y1, int x2, int y2) {
-  for (int row = x1; row <= x2; row++) {
-    moveCursor(row, y1);
-    for (int col = y1; col <= y2; col++) {
+void clearArea(int row1, int col1, int row2, int col2) {
+  for (int row = row1; row <= row2; row++) {
+    moveCursor(row, col1);
+    for (int col = col1; col <= col2; col++) {
       cout << ' ';
     };
   }
@@ -33,11 +36,3 @@ void printBGCell(int x, int y, int color) {
   setBGColor(color);
   cout << " ";
 };
-
-// ---------------------------
-// Terminal information
-void getTerminalSize();
-
-// Keyboard input
-void enableRawMode();
-void disableRawMode();

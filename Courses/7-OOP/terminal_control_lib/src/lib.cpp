@@ -11,10 +11,10 @@ void resetStyle() { cout << ESC << "[0m"; };
 void clearScreen() { cout << ESC << "[2J"; };
 void clearLine() { cout << ESC << "[2K"; };
 void clearToEndOfLine() { cout << ESC << "[0K"; };
-void clearArea(int x1, int y1, int x2, int y2) {
-  for (int row = x1; row <= x2; row++) {
-    moveCursor(row, y1);
-    for (int col = y1; col <= y2; col++) {
+void clearArea(int row1, int col1, int row2, int col2) {
+  for (int row = row1; row <= row2; row++) {
+    moveCursor(row, col1);
+    for (int col = col1; col <= col2; col++) {
       cout << ' ';
     };
   }

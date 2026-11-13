@@ -1,0 +1,35 @@
+{
+  "frameId": 1000,
+  "scopes": [
+    {
+      "scopeName": "Locals",
+      "variables": [
+        {
+          "name": "cur",
+          "evaluateName": "cur",
+          "value": "1",
+          "type": "int"
+        },
+        {
+          "name": "byte1",
+          "evaluateName": "byte1",
+          "value": "27 '\\033'",
+          "type": "char"
+        },
+        {
+          "name": "byte2",
+          "evaluateName": "byte2",
+          "value": "91 '['",
+          "type": "char"
+        },
+        {
+          "name": "byte3",
+          "evaluateName": "byte3",
+          "value": "66 'B'",
+          "type": "char"
+        }
+      ]
+    },
+    null
+  ]
+}

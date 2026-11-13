@@ -11,13 +11,11 @@ using namespace std;
 #define BrightCyan 96
 #define BrightWhite 97
 
-
 #define Bold "[1m"
 #define Regular "[2m"
 #define Italic "[3m"
 #define Underline "[4m"
 #define Blinking "[5m"
-
 
 // Cursor position
 void moveCursor(int x, int y);
@@ -31,7 +29,7 @@ void resetStyle();
 void clearScreen();
 void clearLine();
 void clearToEndOfLine();
-void clearArea(int x1, int y1, int x2, int y2);
+void clearArea(int row1, int col1, int row2, int col2);
 
 // Cursor visibility
 void hideCursor();
