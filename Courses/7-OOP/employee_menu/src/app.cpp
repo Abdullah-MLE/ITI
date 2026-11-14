@@ -2,7 +2,7 @@
 
 #include "../include/lib.h"
 
-// ============ employee ============
+// ============ employee class ============
 class employee {
  public:
   char firstName[20];
@@ -16,6 +16,34 @@ class employee {
     salary = 0;
   }
 };
+
+int findEmptyEmployeeIndex(employee* employees, int capacity) {
+  int i = 0;
+
+  while (i < capacity && employees[i].age != 0) {
+    i++;
+  }
+
+  return i;
+}
+
+employee* initializeEmployeesArray(int capacity) {
+  employee* employess = new employee[capacity];
+  return employess;
+}
+
+employee* extendDB(employee* employees, int* capacity) {
+  employee* employees2 = initializeEmployeesArray(*capacity * 2);
+
+  int i = 0;
+  while (i < *capacity && employees[i].age != 0) {
+    employees2[i] = employees[i];
+    i++;
+  }
+  *capacity *= 2;
+
+  return employees2;
+}
 
 // ============ healpers ============
 void copyString(char dest[], const char src[]) {
@@ -34,16 +62,6 @@ int getWidthCenter(const char* text) {
   }
 
   return (BG_WIDTH - count) / 2;
-}
-
-int findEmptyEmployeeIndex(employee* employees, int capacity) {
-  int i = 0;
-
-  while (i < capacity && employees[i].age != 0) {
-    i++;
-  }
-
-  return i;
 }
 
 // ============ terminal input -AI- ============
@@ -77,7 +95,7 @@ char getch_linux() {
 }
 
 // ============ frame ============
-void drawFrame(const char* pageName) {
+void drawFrame(const char* pageName, int DBType) {
   // printing up and down fram
   for (int i = 0; i < BG_WIDTH; i++) {
     printBGCell(0, i, BrightBlack);
@@ -93,7 +111,11 @@ void drawFrame(const char* pageName) {
   }
 
   moveCursor(1, 3);
-  cout << "Employee MS";
+  cout << "Employee MS-";
+  if (DBType == -1)
+    cout << DBMenu2 << " ✓";
+  else
+    cout << DBMenu1 << " " << DBType;
 
   moveCursor(1, getWidthCenter(pageName));
   cout << pageName;
@@ -107,32 +129,47 @@ void drawFrame(const char* pageName) {
 }
 
 // ============ menu options healpers ============
-int getOptionSRtartRow(int index) {
-  int startRow = BG_HEIGHT / 2;
-
-  return startRow - 2 + (index * 2);
+int OptionRow(int cur) {
+  int centerROW = BG_HEIGHT / 2;
+  switch (cur) {
+    case 0:
+      return centerROW - 2;
+    case 1:
+      return centerROW;
+    case 2:
+      return centerROW + 2;
+    case 3:
+      return centerROW - 1;
+    case 4:
+      return centerROW + 1;
+    default:
+      return -1;
+  }
 }
 
-const char* getOptionText(int index) {
-  switch (index) {
+const char* getOptionText(int cur) {
+  switch (cur) {
     case 0:
       return menuText1;
-
     case 1:
       return menuText2;
-
     case 2:
       return menuText3;
+    case 3:
+      return DBMenu1;
+    case 4:
+      return DBMenu2;
+    default:
+      return "";
   }
-
-  return "";
 }
 
 // ============ menu options ============
 void printOption(int row, const char* option, int color = 0, int BGColor = 0,
                  int underLine = 0) {
-  int center_col = getWidthCenter(option);
-  moveCursor(row, center_col);
+  int centerCol = getWidthCenter(option);
+
+  moveCursor(row, centerCol);
   if (BGColor) setBGColor(BGColor);
   if (underLine) changeFormattingStyle(Underline);
   if (color) setColor(color);
@@ -142,112 +179,153 @@ void printOption(int row, const char* option, int color = 0, int BGColor = 0,
 
 void printOptions() {
   for (int i = 0; i < MENU_OPTION_COUNT; i++)
-    printOption(getOptionSRtartRow(i), getOptionText(i));
+    printOption(OptionRow(i), getOptionText(i));
 
   highlight(0);
 }
 
+void printDBOption(int row, const char* option, int color = 0, int BGColor = 0,
+                   int underLine = 0, int checkd = 0) {
+  int centerCol = BG_WIDTH / 3 * 2;
+
+  moveCursor(row, centerCol);
+  if (BGColor) setBGColor(BGColor);
+  if (underLine) changeFormattingStyle(Underline);
+  if (color) setColor(color);
+  if (checkd)
+    cout << option << " ✓ ";
+  else
+    cout << option << " _ ";
+  resetStyle();
+}
+
+void printDBOptions() {
+  for (int i = 3; i < 5; i++) printDBOption(OptionRow(i), getOptionText(i));
+}
+
 // ============ highlighting ============
-void highlightHelper(int row, const char* option) {
-  clearArea(row, 4, row, BG_WIDTH - 4);
-  printOption(row, option, BrightBlack, BrightWhite, 1);
-}
-
-void deHighlightHelper(int row, const char* option) {
-  clearArea(row, 4, row, BG_WIDTH - 4);
-  printOption(row, option);
-}
-
 void highlight(int cur) {
-  highlightHelper(getOptionSRtartRow(cur), getOptionText(cur));
+  clearArea(OptionRow(cur), 4, OptionRow(cur), BG_WIDTH - 4);
+
+  if (cur < 3)
+    printOption(OptionRow(cur), getOptionText(cur), BrightBlack, BrightWhite,
+                1);
+
+  else
+    printDBOption(OptionRow(cur), getOptionText(cur), BrightBlack, BrightWhite,
+                  1, 1);
 }
 
 void deHighlight(int cur) {
-  int start_row = BG_HEIGHT / 2;
-  deHighlightHelper(getOptionSRtartRow(cur), getOptionText(cur));
+  clearArea(OptionRow(cur), 4, OptionRow(cur), BG_WIDTH - 4);
+
+  if (cur < 3)
+    printOption(OptionRow(cur), getOptionText(cur));
+
+  else
+    printDBOption(OptionRow(cur), getOptionText(cur));
 }
 
 // ============ navigate ============
 void navigate(int* cur, int direction) {
-  if (direction == UP && *cur > 0) {
-    deHighlight(*cur);
-    *cur = *cur - 1;
-    highlight(*cur);
+  deHighlight(*cur);
 
-  } else if (direction == DOWN && *cur != MENU_OPTION_COUNT - 1) {
-    deHighlight(*cur);
+  if (direction == UP && *cur > 0)
+    *cur = *cur - 1;
+
+  else if (direction == DOWN && *cur < MENU_OPTION_COUNT + DB_OPTION_COUNT - 2)
     *cur = *cur + 1;
-    highlight(*cur);
-  }
+
+  else if (direction == RIGHT && *cur < MENU_OPTION_COUNT)
+    *cur = 3;
+
+  else if (direction == LEFT && *cur > MENU_OPTION_COUNT - 1)
+    *cur = 0;
+
+  highlight(*cur);
 }
 
 // ============ pages ============
-void mainPage(int* cur) {
+void mainPage(int* cur, int DBType) {
   hideCursor();
   clearScreen();
   *cur = 0;
-  drawFrame(HomePage);
+  drawFrame(HomePage, DBType);
   printOptions();
+  printDBOptions();
 }
 
-void exitPage(int* cur) {
+void exitPage(int* cur, int DBType) {
   clearScreen();
-  drawFrame(ExitPage);
+  drawFrame(ExitPage, DBType);
   moveCursor(5, 5);
   cout << "thanks for using our app.";
   moveCursor(6, 5);
   cout << "Press Enter to exit!";
 }
 
-void fullMemoryPage() {
+void fullMemoryPage(int DBType) {
   clearScreen();
-  drawFrame(FullMemoryPage);
+  drawFrame(FullMemoryPage, DBType);
   moveCursor(2, 3);
   cout << "Employee database is full!";
 }
 
+employee* selectingStaticDBPage(int* capacity, int* DBType) {
+  clearScreen();
+  drawFrame(DBSizePage, *DBType);
+
+  int start_col = getWidthCenter("Please enter the size of the satic DB:   ");
+  int line = 3;
+
+  showCursor();
+
+  moveCursor(line++, start_col);
+  cout << "The curent DB will Be overwrite!!";
+  line++;
+
+  moveCursor(line++, start_col);
+  cout << "Please enter the size of the satic DB: ";
+  cin >> *capacity;
+  *DBType = *capacity;
+  cin.ignore();
+
+  hideCursor();
+  employee* employess = initializeEmployeesArray(*capacity);
+  return employess;
+}
+
 // ============ employee pages ============
-void employeeAddedPage(int* cur, employee* employees, int capacity) {
+void EmpAddedPage(employee* employees, int capacity, int DBType) {
   int index = findEmptyEmployeeIndex(employees, capacity);
 
   clearScreen();
-  drawFrame(EmployeeAddedPage);
+  drawFrame(EmployeeAddedPage, DBType);
 
   int start_col = getWidthCenter("you are using static DB size =   ");
   int line = 3;
 
   moveCursor(line++, start_col);
-  cout << "you are using static DB size = " << capacity;
+  cout << "you are using ";
+  if (DBType == -1)
+    cout << "Dynamic DB! ";
+  else {
+    cout << "static DB size = " << capacity;
 
-  moveCursor(line++, start_col);
-  cout << "Remaing size is: " << capacity - index;
-  line++;
+    moveCursor(line++, start_col);
+    cout << "Remaing size is: " << capacity - index;
+    line++;
+  }
 
   moveCursor(line++, start_col);
   cout << "Employee added successfully!";
 
   moveCursor(line++, start_col);
-  if (index == capacity) cout << "DB is Full!";
+  if (index == capacity && DBType != -1) cout << "DB is Full!";
 }
 
-void addEmployeePage(int* cur, employee* employees, int capacity) {
-  int index = findEmptyEmployeeIndex(employees, capacity);
-  if (index == capacity) fullMemoryPage();
-
-  clearScreen();
-  drawFrame(NewEmpPage);
-  showCursor();
-
-  int start_col = getWidthCenter("you are using static DB size =   ");
-  int line = 3;
-
-  moveCursor(line++, start_col);
-  cout << "you are using static DB size = " << capacity;
-
-  moveCursor(line++, getWidthCenter("you are using static DB size =   "));
-  cout << "Remaing size is: " << capacity - index;
-  line++;
-
+void addEmp(int line, int start_col, int index, employee* employees,
+            int capacity) {
   moveCursor(line++, start_col);
   cout << "enter the Employee firstName: ";
   cin >> employees[index].firstName;
@@ -268,45 +346,92 @@ void addEmployeePage(int* cur, employee* employees, int capacity) {
   cin.ignore();
 }
 
-void dispalyEmployeesPage(int* cur, employee* employees, int capacity) {
+void addSaticEmpPage(employee* employees, int capacity, int DBType) {
+  int index = findEmptyEmployeeIndex(employees, capacity);
+  if (index == capacity) fullMemoryPage(DBType);
+
   clearScreen();
-  drawFrame(EmployeeTablePage);
+  drawFrame(NewEmpPage, DBType);
+  showCursor();
+
+  int start_col = getWidthCenter("you are using static DB size =   ");
   int line = 3;
 
-  int center_col = getWidthCenter(
+  moveCursor(line++, start_col);
+  cout << "you are using static DB size = " << capacity;
+
+  moveCursor(line++, start_col);
+  cout << "Remaing size is: " << capacity - index;
+  line++;
+
+  addEmp(line, start_col, index, employees, capacity);
+}
+
+void addDynaimcEmpPage(employee* employees, int* capacity, int DBType) {
+  int index = findEmptyEmployeeIndex(employees, *capacity);
+  int line = 3;
+  int start_col = getWidthCenter("you are using Dynamic DB");
+
+  clearScreen();
+  drawFrame(NewEmpPage, DBType);
+  showCursor();
+  
+  if (index >= *capacity) {
+    extendDB(employees, capacity);
+    moveCursor(line++, start_col);
+    cout << "DB Extened!!!";
+    line++;
+  }
+  moveCursor(line++, start_col);
+  cout << "you are using Dynamic DB";
+  line++;
+
+  addEmp(line, start_col, index, employees, *capacity);
+}
+
+void dispalyEmployeesPage(employee* employees, int capacity, int DBType) {
+  clearScreen();
+  drawFrame(EmployeeTablePage, DBType);
+  int line = 3;
+
+  int centerCol = getWidthCenter(
       "+----------------------+----------------------+-----+--------+");
 
   // DB info
   moveCursor(line++, getWidthCenter("you are using static DB size =   "));
-  cout << "you are using static DB size = " << capacity;
+  cout << "you are using ";
+  if (DBType == -1)
+    cout << "Dynamic DB";
+  else
+    cout << "static DB size = " << capacity;
 
   // Table header
-  moveCursor(line++, center_col);
+  moveCursor(line++, centerCol);
   cout << "+----------------------+----------------------+-----+--------+";
-  moveCursor(line++, center_col);
+  moveCursor(line++, centerCol);
   cout << "| First Name           | Last Name            | Age | Salary |";
-  moveCursor(line++, center_col);
+  moveCursor(line++, centerCol);
   cout << "+----------------------+----------------------+-----+--------+";
 
   // Employees rows
   int i = 0;
-  while (i < capacity && employees[i].age != 0) {
-    moveCursor(line, center_col);
+  while (employees[i].age != 0) {
+    moveCursor(line, centerCol);
     cout << "| " << employees[i].firstName;
 
-    moveCursor(line, center_col + 22);
+    moveCursor(line, centerCol + 22);
     cout << " | " << employees[i].lastName;
 
-    moveCursor(line, center_col + 45);
+    moveCursor(line, centerCol + 45);
     cout << " | " << employees[i].age;
 
-    moveCursor(line, center_col + 51);
+    moveCursor(line, centerCol + 51);
     cout << " | " << employees[i].salary;
 
-    moveCursor(line++, center_col + 60);
+    moveCursor(line++, centerCol + 60);
     cout << " |";
 
-    moveCursor(line++, center_col);
+    moveCursor(line++, centerCol);
     cout << "+----------------------+----------------------+-----+--------+";
 
     i++;
@@ -336,30 +461,57 @@ void testData(employee* employees) {
 
 // ============ main loop ============
 void mainLoop() {
-  employee* EstaticEmpArray = new employee[EMPLOYEE_CAPACITY];
-  testData(EstaticEmpArray);
-  
   int cur = 0;
   bool running = true;
-  
-  mainPage(&cur);
+  int capacity = EMPLOYEE_CAPACITY;
+  int DBType = capacity;
+
+  mainPage(&cur, DBType);
+
+  employee* employess = initializeEmployeesArray(capacity);
+  testData(employess);
 
   while (running) {
     char byte1 = getch_linux();
-    
-    if (byte1 == 'q' || byte1 == 'Q' || (cur == 2 && byte1 == '\n'))
-      exitPage(&cur);
 
-    else if (byte1 == 'E' || (cur == 0 && byte1 == '\n')) {
-      addEmployeePage(&cur, EstaticEmpArray, EMPLOYEE_CAPACITY);
-      employeeAddedPage(&cur, EstaticEmpArray, EMPLOYEE_CAPACITY);
+    // EXIT
+    if (byte1 == 'q' || byte1 == 'Q' || (cur == 2 && byte1 == '\n')) {
+      exitPage(&cur, DBType);
+      running = false;
     }
 
-    else if (cur == 1 && byte1 == '\n')
-      dispalyEmployeesPage(&cur, EstaticEmpArray, EMPLOYEE_CAPACITY);
+    // Employees
+    else if (byte1 == 'E' || (cur == 0 && byte1 == '\n')) {
+      if (DBType == -1)
+        addDynaimcEmpPage(employess, &capacity, DBType);
+      else
+        addSaticEmpPage(employess, capacity, DBType);
+      EmpAddedPage(employess, capacity, DBType);
 
+    }
+
+    // Display
+    else if (cur == 1 && byte1 == '\n')
+      dispalyEmployeesPage(employess, capacity, DBType);
+
+    // static DB
+    else if (cur == 3 && byte1 == '\n') {
+      employess = selectingStaticDBPage(&capacity, &DBType);
+      mainPage(&cur, DBType);
+    }
+
+    // Dynamic DB
+    else if (cur == 4 && byte1 == '\n') {
+      employess = initializeEmployeesArray(EMPLOYEE_CAPACITY);
+      capacity = EMPLOYEE_CAPACITY;
+      DBType = -1;
+      mainPage(&cur, DBType);
+
+    }
+
+    // home
     else if (byte1 == 'H')
-      mainPage(&cur);
+      mainPage(&cur, DBType);
 
     else if (byte1 == ESC) {
       char byte2 = getch_linux();
@@ -371,6 +523,14 @@ void mainLoop() {
 
         case 'B':
           navigate(&cur, DOWN);
+          break;
+
+        case 'C':
+          navigate(&cur, RIGHT);
+          break;
+
+        case 'D':
+          navigate(&cur, LEFT);
           break;
       }
     }
