@@ -8,7 +8,7 @@ using namespace std;
 
 #define BG_WIDTH 81
 #define BG_HEIGHT 24
-#define EMPLOYEE_CAPACITY 2
+#define EMPLOYEE_CAPACITY 5
 
 #define MENU_OPTION_COUNT 3
 #define menuText1 "New Employee"
