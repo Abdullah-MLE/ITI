@@ -255,6 +255,17 @@ void mainPage(int* cur, int DBType) {
   printDBOptions();
 }
 
+void exitToHome(int DBType, int* cur = 0) {
+  bool wating = 1;
+  while (wating) {
+    char byte1 = getch_linux();
+    if (byte1 == ESC) {
+      mainPage(cur, DBType);
+      wating = 0;
+    }
+  }
+}
+
 void exitPage(int* cur, int DBType) {
   clearScreen();
   drawFrame(ExitPage, DBType);
@@ -269,6 +280,7 @@ void fullMemoryPage(int DBType) {
   drawFrame(FullMemoryPage, DBType);
   moveCursor(2, 3);
   cout << "Employee database is full!";
+  // exitToHome(DBType);
 }
 
 employee* selectingStaticDBPage(int* capacity, int* DBType) {
@@ -322,6 +334,8 @@ void EmpAddedPage(employee* employees, int capacity, int DBType) {
 
   moveCursor(line++, start_col);
   if (index == capacity && DBType != -1) cout << "DB is Full!";
+
+  // exitToHome(DBType);
 }
 
 void addEmp(int line, int start_col, int index, employee* employees,
@@ -365,6 +379,8 @@ void addSaticEmpPage(employee* employees, int capacity, int DBType) {
   line++;
 
   addEmp(line, start_col, index, employees, capacity);
+
+  // exitToHome(DBType);
 }
 
 void addDynaimcEmpPage(employee* employees, int* capacity, int DBType) {
@@ -375,7 +391,7 @@ void addDynaimcEmpPage(employee* employees, int* capacity, int DBType) {
   clearScreen();
   drawFrame(NewEmpPage, DBType);
   showCursor();
-  
+
   if (index >= *capacity) {
     extendDB(employees, capacity);
     moveCursor(line++, start_col);
@@ -387,6 +403,8 @@ void addDynaimcEmpPage(employee* employees, int* capacity, int DBType) {
   line++;
 
   addEmp(line, start_col, index, employees, *capacity);
+
+  // exitToHome(DBType);
 }
 
 void dispalyEmployeesPage(employee* employees, int capacity, int DBType) {
@@ -436,6 +454,7 @@ void dispalyEmployeesPage(employee* employees, int capacity, int DBType) {
 
     i++;
   }
+  // exitToHome(DBType);
 }
 
 // == test data ==
@@ -480,7 +499,7 @@ void mainLoop() {
       running = false;
     }
 
-    // Employees
+    // Employees Page
     else if (byte1 == 'E' || (cur == 0 && byte1 == '\n')) {
       if (DBType == -1)
         addDynaimcEmpPage(employess, &capacity, DBType);
@@ -490,17 +509,17 @@ void mainLoop() {
 
     }
 
-    // Display
+    // Display Page
     else if (cur == 1 && byte1 == '\n')
       dispalyEmployeesPage(employess, capacity, DBType);
 
-    // static DB
+    // static DB Opthin
     else if (cur == 3 && byte1 == '\n') {
       employess = selectingStaticDBPage(&capacity, &DBType);
       mainPage(&cur, DBType);
     }
 
-    // Dynamic DB
+    // Dynamic DB Opthin
     else if (cur == 4 && byte1 == '\n') {
       employess = initializeEmployeesArray(EMPLOYEE_CAPACITY);
       capacity = EMPLOYEE_CAPACITY;
@@ -509,7 +528,7 @@ void mainLoop() {
 
     }
 
-    // home
+    // home Page
     else if (byte1 == 'H')
       mainPage(&cur, DBType);
 
